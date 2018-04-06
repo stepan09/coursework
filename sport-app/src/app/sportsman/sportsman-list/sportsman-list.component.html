@@ -1,52 +1,82 @@
-<div class="row">
-  <div class="col">
-    <section>
-      <header class="header">
-        <div class="row">
-          <div class="col-md-4">
-            <h1 style="text-align: center">Спортсмени</h1>
-          </div>
-          <div class="col-md-6">
+<h1 class="text-center">Список спортсменів</h1>
+<button mat-icon-button color="warn" (click)="addSportsman()">
+  <mat-icon>person_add</mat-icon>
+</button>
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <td>#</td>
+    <td>Прізвище</td>
+    <td>Ім'я</td>
+    <td>По батькові</td>
+    <td>Дата народження</td>
+    <td></td>
+    <td></td>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let sportsman of sportsmen">
+    <ng-template [ngTemplateOutlet]="loadTemplate(sportsman)"
+                 [ngTemplateOutletContext]="{ $implicit: sportsman}">
+    </ng-template>
+  </tr>
+  </tbody>
+</table>
+<div>{{statusMessage}}</div>
 
-          </div>
-          <div class="col-md-2">
-            <button type="button" class="btn btn-primary" (click)="redirectNewSportsmanPage()">New Sportsman</button>
-          </div>
-        </div>
 
-      </header>
-    </section>
+<!--шаблон для читання-->
+<ng-template #readOnlyTemplate let-sportsman>
+  <td>{{sportsman.sportsmanId}}</td>
+  <td>{{sportsman.lastName}}</td>
+  <td>{{sportsman.firstName}}</td>
+  <td>{{sportsman.middleName}}</td>
+  <td>{{sportsman.birthDate}}</td>
+  <td>
+    <input type="button" value="Змінити" class="btn btn-success" (click)="editSportsman(sportsman)" />
+  </td>
+  <td>
+    <input type="button" value="Видалити" (click)="deleteSportsman(sportsman)" class="btn btn-danger" />
+  </td>
+</ng-template>
 
-    <section class="main">
-
-      <table class="table">
-        <thead>
-        <tr>
-          <th>#</th>
-          <th>Прізвище</th>
-          <th>Ім'я</th>
-          <th>По батькові</th>
-          <th>Дата народження</th>
-          <th></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let sportsman of sportsmen">
-          <th scope="row">{{sportsman.sportsmanId}}</th>
-          <td>{{sportsman.lastName}}</td>
-          <td>{{sportsman.firstName}}</td>
-          <td>{{sportsman.middleName}}</td>
-          <td>{{sportsman.birthDate}}</td>
-          <td>
-            <button type="button" class="btn btn-success" (click)="editSportsmanPage(sportsman)">Edit</button>
-            <button type="button" class="btn btn-danger" (click)="deleteSportsman(sportsman)">Delete</button>
-          </td>
-          <td>
-          </td>
-        </tr>
-
-        </tbody>
-      </table>
-    </section>
-  </div>
-</div>
+<!--шаблон для редагування-->
+<ng-template #editTemplate>
+  <td>
+    <input type="text" [(ngModel)]="editedSportsman.sportsmanId"  disabled class="form-control" />
+  </td>
+  <td>
+    <mat-form-field>
+      <input matInput type="text" placeholder="Прізвище" [(ngModel)]="editedSportsman.lastName" class="form-control" />
+      <button mat-button *ngIf="editedSportsman.lastName" matSuffix mat-icon-button aria-label="Clear" (click)="editedSportsman.lastName=''">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+  </td>
+  <td>
+    <mat-form-field>
+      <input matInput type="text" placeholder="Ім'я" [(ngModel)]="editedSportsman.firstName" class="form-control" />
+      <button mat-button *ngIf="editedSportsman.firstName" matSuffix mat-icon-button aria-label="Clear" (click)="editedSportsman.firstName=''">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+  </td>
+  <td>
+    <mat-form-field>
+      <input matInput type="text" placeholder="По батькові" [(ngModel)]="editedSportsman.middleName" class="form-control" />
+      <button mat-button *ngIf="editedSportsman.middleName" matSuffix mat-icon-button aria-label="Clear" (click)="editedSportsman.middleName=''">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+  </td>
+  <td>
+    <input type="date" [(ngModel)]="editedSportsman.birthDate" class="form-control" />
+  </td>
+  <td>
+  <td>
+    <input type="button" value="Зберегти" (click)="saveSportsman()" class="btn btn-outline-success" />
+  </td>
+  <td>
+    <input type="button" value="Відмінити" (click)="cancel()" class="btn btn-outline-warning" />
+  </td>
+</ng-template>

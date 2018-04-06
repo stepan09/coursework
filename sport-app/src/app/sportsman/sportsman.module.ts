@@ -3,18 +3,16 @@ import { CommonModule } from '@angular/common';
 
 import { SportsmanRoutingModule } from './sportsman-routing.module';
 import { SportsmanListComponent } from './sportsman-list/sportsman-list.component';
-import { SportsmanCreateComponent } from './sportsman-create/sportsman-create.component';
-import {SportsmanService} from "./sportsman.service";
 import {FormsModule} from "@angular/forms";
+import {MaterialModule} from "../material.module";
 
 @NgModule({
   imports: [
     CommonModule,
     SportsmanRoutingModule,
-    FormsModule
+    FormsModule,
+    MaterialModule
   ],
-  declarations: [SportsmanListComponent, SportsmanCreateComponent],
-  providers: [SportsmanService]
-
+  declarations: [SportsmanListComponent]
 })
 export class SportsmanModule { }
