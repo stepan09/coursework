@@ -1,0 +1,76 @@
+<h1 class="text-center">Список організаторів</h1>
+<button mat-icon-button color="warn" (click)="addOrganizer()">
+  <mat-icon>person_add</mat-icon>
+</button>
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <td>#</td>
+    <td>Прізвище</td>
+    <td>Ім'я</td>
+    <td>По батькові</td>
+    <td></td>
+    <td></td>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let organizer of organizers">
+    <ng-template [ngTemplateOutlet]="loadTemplate(organizer)"
+                 [ngTemplateOutletContext]="{ $implicit: organizer}">
+    </ng-template>
+  </tr>
+  </tbody>
+</table>
+<div>{{statusMessage}}</div>
+
+
+<!--шаблон для читання-->
+<ng-template #readOnlyTemplate let-organizer>
+  <td>{{organizer.organizerId}}</td>
+  <td>{{organizer.lastName}}</td>
+  <td>{{organizer.firstName}}</td>
+  <td>{{organizer.middleName}}</td>
+  <td>
+    <input type="button" value="Змінити" class="btn btn-success" (click)="editOrganizer(organizer)" />
+  </td>
+  <td>
+    <input type="button" value="Видалити" (click)="deleteOrganizer(organizer)" class="btn btn-danger" />
+  </td>
+</ng-template>
+
+<!--шаблон для редагування-->
+<ng-template #editTemplate>
+  <td>
+    <input type="text" [(ngModel)]="editedOrganizer.organizerId"  disabled class="form-control" />
+  </td>
+  <td>
+    <mat-form-field>
+      <input matInput type="text" placeholder="Прізвище" [(ngModel)]="editedOrganizer.lastName" class="form-control" />
+      <button mat-button *ngIf="editedOrganizer.lastName" matSuffix mat-icon-button aria-label="Clear" (click)="editedOrganizer.lastName=''">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+  </td>
+  <td>
+  <mat-form-field>
+    <input matInput type="text" placeholder="Ім'я" [(ngModel)]="editedOrganizer.firstName" class="form-control" />
+    <button mat-button *ngIf="editedOrganizer.firstName" matSuffix mat-icon-button aria-label="Clear" (click)="editedOrganizer.firstName=''">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+  </td>
+  <td>
+    <mat-form-field>
+      <input matInput type="text" placeholder="По батькові" [(ngModel)]="editedOrganizer.middleName" class="form-control" />
+      <button mat-button *ngIf="editedOrganizer.middleName" matSuffix mat-icon-button aria-label="Clear" (click)="editedOrganizer.middleName=''">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+  </td>
+  <td>
+    <input type="button" value="Зберегти" (click)="saveOrganizer()" class="btn btn-outline-success" />
+  </td>
+  <td>
+    <input type="button" value="Відмінити" (click)="cancel()" class="btn btn-outline-warning" />
+  </td>
+</ng-template>

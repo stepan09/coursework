@@ -1,0 +1,61 @@
+<h1>Список спортивних клубів</h1>
+<button mat-icon-button color="warn" (click)="addSportClub()">
+  <mat-icon>group_add</mat-icon>
+</button>
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <td>#</td>
+    <td>Назва</td>
+    <td>Дата заснування</td>
+    <td></td>
+    <td></td>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let sportClub of sportClubs">
+    <ng-template [ngTemplateOutlet]="loadTemplate(sportClub)"
+                 [ngTemplateOutletContext]="{ $implicit: sportClub}">
+    </ng-template>
+  </tr>
+  </tbody>
+</table>
+<div>{{statusMessage}}</div>
+
+
+<!--шаблон для читання-->
+<ng-template #readOnlyTemplate let-sportClub>
+  <td>{{sportClub.sportClubId}}</td>
+  <td>{{sportClub.name}}</td>
+  <td>{{sportClub.foundationDate}}</td>
+  <td>
+    <input type="button" value="Змінити" class="btn btn-primary" (click)="editSportClub(sportClub)" />
+  </td>
+  <td>
+    <input type="button" value="Видалити" (click)="deleteSportClub(sportClub)" class="btn btn-danger" />
+  </td>
+</ng-template>
+
+<!--шаблон для редагування-->
+<ng-template #editTemplate>
+  <td>
+    <input type="text" [(ngModel)]="editedSportClub.sportClubId"  disabled class="form-control" />
+  </td>
+  <td>
+    <mat-form-field>
+      <input matInput type="text" placeholder="Назва" [(ngModel)]="editedSportClub.name" class="form-control" />
+      <button mat-button *ngIf="editedSportClub.name" matSuffix mat-icon-button aria-label="Clear" (click)="editedSportClub.name=''">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+  </td>
+  <td>
+    <input type="date" [(ngModel)]="editedSportClub.foundationDate" class="form-control" />
+  </td>
+  <td>
+    <input type="button" value="Зберегти" (click)="saveSportClub()" class="btn btn-success" />
+  </td>
+  <td>
+    <input type="button" value="Відмінити" (click)="cancel()" class="btn btn-warning" />
+  </td>
+</ng-template>

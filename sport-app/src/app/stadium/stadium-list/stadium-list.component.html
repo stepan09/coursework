@@ -1,0 +1,89 @@
+<h1>Список стадіонів</h1>
+<button mat-icon-button color="warn" (click)="addStadium()">
+  <mat-icon>person_add</mat-icon>
+</button>
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <td>#</td>
+    <td>Назва</td>
+    <td>Дата заснування</td>
+    <td>Адреса</td>
+    <td>Вмістимість</td>
+    <td>Бігові доріжки</td>
+    <td></td>
+    <td></td>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let stadium of stadiums">
+    <ng-template [ngTemplateOutlet]="loadTemplate(stadium)"
+                 [ngTemplateOutletContext]="{ $implicit: stadium}">
+    </ng-template>
+  </tr>
+  </tbody>
+</table>
+<div>{{statusMessage}}</div>
+
+
+<!--шаблон для читання-->
+<ng-template #readOnlyTemplate let-stadium>
+  <td>{{stadium.stadiumId}}</td>
+  <td>{{stadium.name}}</td>
+  <td>{{stadium.foundationDate}}</td>
+  <td>{{stadium.address}}</td>
+  <td>{{stadium.capacity}}</td>
+  <td>
+    <div *ngIf="stadium.treadmill; else other_content"><i style="color: limegreen" class="material-icons">done</i></div>
+    <ng-template #other_content><i style="color: #ff0f42" class="material-icons">close</i></ng-template>
+  </td>
+  <td>
+    <input type="button" value="Змінити" class="btn btn-primary" (click)="editStadium(stadium)" />
+  </td>
+  <td>
+    <input type="button" value="Видалити" (click)="deleteStadium(stadium)" class="btn btn-danger" />
+  </td>
+</ng-template>
+
+<!--шаблон для редагування-->
+<ng-template #editTemplate>
+  <td>
+      <input type="text" [(ngModel)]="editedStadium.stadiumId"  disabled class="form-control" />
+  </td>
+  <td>
+    <mat-form-field>
+      <input matInput type="text" placeholder="Назва" [(ngModel)]="editedStadium.name" class="form-control" />
+        <button mat-button *ngIf="editedStadium.name" matSuffix mat-icon-button aria-label="Clear" (click)="editedStadium.name=''">
+          <mat-icon>close</mat-icon>
+        </button>
+    </mat-form-field>
+  </td>
+  <td>
+    <input type="date" [(ngModel)]="editedStadium.foundationDate" class="form-control" />
+  </td>
+  <td>
+    <mat-form-field>
+      <input matInput type="text" placeholder="Адреса" [(ngModel)]="editedStadium.address" class="form-control" />
+        <button mat-button *ngIf="editedStadium.name" matSuffix mat-icon-button aria-label="Clear" (click)="editedStadium.name=''">
+          <mat-icon>close</mat-icon>
+        </button>
+    </mat-form-field>
+  </td>
+  <td>
+    <mat-form-field>
+    <input matInput type="text" placeholder="Вмістимість" [(ngModel)]="editedStadium.capacity" class="form-control" />
+    <button mat-button *ngIf="editedStadium.name" matSuffix mat-icon-button aria-label="Clear" (click)="editedStadium.name=''">
+      <mat-icon>close</mat-icon>
+    </button>
+    </mat-form-field>
+  </td>
+  <td>
+    <mat-checkbox [(ngModel)]="editedStadium.treadmill"></mat-checkbox>
+  </td>
+   <td>
+    <input type="button" value="Зберегти" (click)="saveStadium()" class="btn btn-success" />
+  </td>
+  <td>
+    <input type="button" value="Відмінити" (click)="cancel()" class="btn btn-warning" />
+  </td>
+</ng-template>

@@ -1,0 +1,29 @@
+<div class="container">
+  <h1>Add New Coach</h1>
+  <div class="row">
+    <div class="col-md-6">
+      <form (ngSubmit)="saveCoach(coachForm)" #coachForm="ngForm">
+        <div class="form-group">
+          <label for="lastName">Name</label>
+          <input id="lastName" type="text" class="form-control" [(ngModel)]="coachForm.lastName" name="lastName" required>
+        </div>
+        <div class="form-group">
+          <label for="firstName">Ім'я</label>
+          <input id="firstName" type="text" class="form-control" [(ngModel)]="coachForm.firstName" name="firstName" required>
+        </div>
+        <div class="form-group">
+          <label for="middleName">По батькові</label>
+          <input id="middleName" type="text" class="form-control" [(ngModel)]="coachForm.middleName" name="middleName" required>
+        </div>
+        <div class="form-group">
+          <label for="birthDate">Дата народження</label>
+          <input id="birthDate" type="date" class="form-control" [(ngModel)]="coachForm.birthDate" name="birthDate" required>
+        </div>
+
+        <div class="form-group">
+          <button type="submit" class="btn btn-success" [disabled]="!coachForm.form.valid">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

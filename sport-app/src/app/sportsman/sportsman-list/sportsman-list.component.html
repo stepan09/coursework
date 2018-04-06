@@ -1,0 +1,52 @@
+<div class="row">
+  <div class="col">
+    <section>
+      <header class="header">
+        <div class="row">
+          <div class="col-md-4">
+            <h1 style="text-align: center">Спортсмени</h1>
+          </div>
+          <div class="col-md-6">
+
+          </div>
+          <div class="col-md-2">
+            <button type="button" class="btn btn-primary" (click)="redirectNewSportsmanPage()">New Sportsman</button>
+          </div>
+        </div>
+
+      </header>
+    </section>
+
+    <section class="main">
+
+      <table class="table">
+        <thead>
+        <tr>
+          <th>#</th>
+          <th>Прізвище</th>
+          <th>Ім'я</th>
+          <th>По батькові</th>
+          <th>Дата народження</th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let sportsman of sportsmen">
+          <th scope="row">{{sportsman.sportsmanId}}</th>
+          <td>{{sportsman.lastName}}</td>
+          <td>{{sportsman.firstName}}</td>
+          <td>{{sportsman.middleName}}</td>
+          <td>{{sportsman.birthDate}}</td>
+          <td>
+            <button type="button" class="btn btn-success" (click)="editSportsmanPage(sportsman)">Edit</button>
+            <button type="button" class="btn btn-danger" (click)="deleteSportsman(sportsman)">Delete</button>
+          </td>
+          <td>
+          </td>
+        </tr>
+
+        </tbody>
+      </table>
+    </section>
+  </div>
+</div>
