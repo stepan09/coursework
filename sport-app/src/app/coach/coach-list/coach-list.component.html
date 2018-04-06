@@ -1,52 +1,82 @@
-<div class="row">
-  <div class="col">
-    <section>
-      <header class="header">
-        <div class="row">
-          <div class="col-md-4">
-            <h1 style="text-align: center">Тренери</h1>
-          </div>
-          <div class="col-md-6">
+<h1 class="text-center">Список тренерів</h1>
+<button mat-icon-button color="warn" (click)="addCoach()">
+  <mat-icon>person_add</mat-icon>
+</button>
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <td>#</td>
+    <td>Прізвище</td>
+    <td>Ім'я</td>
+    <td>По батькові</td>
+    <td>Дата народження</td>
+    <td></td>
+    <td></td>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let coach of coaches">
+    <ng-template [ngTemplateOutlet]="loadTemplate(coach)"
+                 [ngTemplateOutletContext]="{ $implicit: coach}">
+    </ng-template>
+  </tr>
+  </tbody>
+</table>
+<div>{{statusMessage}}</div>
 
-          </div>
-          <div class="col-md-2">
-            <button type="button" class="btn btn-primary" (click)="redirectNewCoachPage()">New Coach</button>
-          </div>
-        </div>
 
-      </header>
-    </section>
+<!--шаблон для читання-->
+<ng-template #readOnlyTemplate let-coach>
+  <td>{{coach.coachId}}</td>
+  <td>{{coach.lastName}}</td>
+  <td>{{coach.firstName}}</td>
+  <td>{{coach.middleName}}</td>
+  <td>{{coach.birthDate}}</td>
+  <td>
+    <input type="button" value="Змінити" class="btn btn-success" (click)="editCoach(coach)" />
+  </td>
+  <td>
+    <input type="button" value="Видалити" (click)="deleteCoach(coach)" class="btn btn-danger" />
+  </td>
+</ng-template>
 
-    <section class="main">
-
-      <table class="table">
-        <thead>
-        <tr>
-          <th>#</th>
-          <th>Прізвище</th>
-          <th>Ім'я</th>
-          <th>По батькові</th>
-          <th>Дата народження</th>
-          <th></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let coach of coaches">
-          <th scope="row">{{coach.coachId}}</th>
-          <td>{{coach.lastName}}</td>
-          <td>{{coach.firstName}}</td>
-          <td>{{coach.middleName}}</td>
-          <td>{{coach.birthDate}}</td>
-          <td>
-            <button type="button" class="btn btn-success" (click)="editCoachPage(coach)">Edit</button>
-            <button type="button" class="btn btn-danger" (click)="deleteCoach(coach)">Delete</button>
-          </td>
-          <td>
-          </td>
-        </tr>
-
-        </tbody>
-      </table>
-    </section>
-  </div>
-</div>
+<!--шаблон для редагування-->
+<ng-template #editTemplate>
+  <td>
+    <input type="text" [(ngModel)]="editedCoach.coachId"  disabled class="form-control" />
+  </td>
+  <td>
+    <mat-form-field>
+      <input matInput type="text" placeholder="Прізвище" [(ngModel)]="editedCoach.lastName" class="form-control" />
+      <button mat-button *ngIf="editedCoach.lastName" matSuffix mat-icon-button aria-label="Clear" (click)="editedCoach.lastName=''">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+  </td>
+  <td>
+    <mat-form-field>
+      <input matInput type="text" placeholder="Ім'я" [(ngModel)]="editedCoach.firstName" class="form-control" />
+      <button mat-button *ngIf="editedCoach.firstName" matSuffix mat-icon-button aria-label="Clear" (click)="editedCoach.firstName=''">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+  </td>
+  <td>
+    <mat-form-field>
+      <input matInput type="text" placeholder="По батькові" [(ngModel)]="editedCoach.middleName" class="form-control" />
+      <button mat-button *ngIf="editedCoach.middleName" matSuffix mat-icon-button aria-label="Clear" (click)="editedCoach.middleName=''">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+  </td>
+  <td>
+    <input type="date" [(ngModel)]="editedCoach.birthDate" class="form-control" />
+  </td>
+  <td>
+  <td>
+    <input type="button" value="Зберегти" (click)="saveCoach()" class="btn btn-outline-success" />
+  </td>
+  <td>
+    <input type="button" value="Відмінити" (click)="cancel()" class="btn btn-outline-warning" />
+  </td>
+</ng-template>

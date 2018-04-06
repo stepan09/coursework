@@ -6,7 +6,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {CoachModule} from "./coach/coach.module";
 import {HttpModule} from "@angular/http";
-import {CoachService} from "./coach/coach.service";
 import {FormsModule} from "@angular/forms";
 import {SportsmanModule} from "./sportsman/sportsman.module";
 import {SportsmanService} from "./sportsman/sportsman.service";
@@ -37,11 +36,11 @@ import {OrganizerModule} from "./organizer/organizer.module";
     MaterialModule
   ],
   providers: [
-    CoachService,
     SportsmanService,
     StadiumModule,
     SportClubModule,
-    OrganizerModule
+    OrganizerModule,
+    CoachModule,
   ],
   bootstrap: [AppComponent]
 })

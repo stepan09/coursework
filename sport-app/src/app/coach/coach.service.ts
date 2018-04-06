@@ -1,35 +1,28 @@
 import { Injectable } from '@angular/core';
-import {Http, Response} from "@angular/http";
-import {Observable} from "rxjs/Observable";
-import 'rxjs/add/operator/map'
-import 'rxjs/add/operator/catch';
-import {Coach} from "./Coach";
+import {HttpClient} from "@angular/common/http";
+import {Coach} from "./coach";
 
 @Injectable()
 export class CoachService {
 
-  private apiUrl = 'http://localhost:8080/api/coaches';
+  private url = 'http://localhost:8080/api/coaches';
 
-  constructor(private http: Http) { }
+  constructor(private http: HttpClient) { }
 
-  findAll(): Observable<Coach[]> {
-    return this.http.get(this.apiUrl)
-      .map((res:Response)=>res.json())
-      .catch((error:any)=>Observable.throw(error.json().error || 'Server error'));
+  getCoaches() {
+    return this.http.get(this.url);
   }
 
-  public saveCoach(coach: Coach) {
-    return this.http.post(this.apiUrl, coach)
-      .map(res=>res.json());
+  createCoach(coach: Coach) {
+    return this.http.post(this.url, coach);
   }
 
-  deleteCoachById(coach: Coach) {
-    console.log(coach.coachId);
-    return this.http.delete(this.apiUrl + "/"+ coach.coachId);
+  updateCoach(id: number, coach: Coach) {
+    return this.http.put(this.url + '/' + id, coach);
   }
 
-  updateCoach(coach: Coach) {
-    return this.http.put(this.apiUrl, coach)
-      .map(res=>res.json());
+  deleteCoach(id: number) {
+    return this.http.delete(this.url+ '/' + id);
   }
+
 }

@@ -1,51 +1,85 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {CoachService} from "../coach.service";
-import {Coach} from "../Coach";
-import {Router} from "@angular/router";
+import {Coach} from "../coach";
 
 @Component({
   selector: 'app-coach-list',
   templateUrl: './coach-list.component.html',
-  styleUrls: ['./coach-list.component.css']
+  styleUrls: ['./coach-list.component.css'],
+  providers: [CoachService]
 })
 export class CoachListComponent implements OnInit {
 
-  private coaches: Coach[];
+  @ViewChild('readOnlyTemplate') readOnlyTemplate: TemplateRef<any>;
+  @ViewChild('editTemplate') editTemplate: TemplateRef<any>;
 
-  constructor(private coachService: CoachService,
-              private router: Router) { }
+  editedCoach: Coach;
+  coaches: Array<Coach>;
+  isNewRecord: boolean;
+  statusMessage: string;
+
+  constructor(private service: CoachService) {
+    this.coaches = new Array<Coach>();
+  }
 
   ngOnInit() {
-    this.getAllCoaches();
+    this.loadCoaches();
   }
 
-  getAllCoaches() {
-    this.coachService.findAll().subscribe(
-      coaches=>{
-        this.coaches = coaches;
-      },
-      err => {
-        console.log(err);
-      }
-    );
+  private loadCoaches() {
+    this.service.getCoaches().subscribe((data: Coach[]) => {
+      this.coaches = data;
+    });
   }
 
-  redirectNewCoachPage() {
-    this.router.navigate(['/coach/create']);
+  addCoach() {
+    this.editedCoach = new Coach(0, null,null,null,null);
+    this.coaches.push(this.editedCoach);
+    this.isNewRecord = true;
   }
 
-  editCoachPage(coach: Coach) {
-    if (coach) {
-      this.router.navigate(['/coach/edit', coach.coachId]);
+  editCoach(coach: Coach) {
+    this.editedCoach = new Coach(coach.coachId, coach.lastName, coach.firstName, coach.middleName, coach.birthDate);
+  }
+
+  loadTemplate(coach: Coach) {
+    if (this.editedCoach && this.editedCoach.coachId == coach.coachId) {
+      return this.editTemplate;
+    } else {
+      return this.readOnlyTemplate;
     }
   }
 
-  deleteCoach(coach: Coach) {
-    this.coachService.deleteCoachById(coach)
-      .subscribe(data => {
-        this.coaches = this.coaches.filter(c => c !== coach);
+  saveCoach(coach: Coach) {
+    if (this.isNewRecord) {
+      this.service.createCoach(this.editedCoach).subscribe(data => {
+        this.statusMessage = 'Дані успішно добавлено',
+          this.loadCoaches();
       });
-    console.log('Delete Coach');
+      this.isNewRecord = false;
+      this.editedCoach = null;
+    } else {
+      this.service.updateCoach(this.editedCoach.coachId, this.editedCoach).subscribe(data => {
+        this.statusMessage = 'Дані успішно оновлено',
+          this.loadCoaches();
+      });
+      this.editedCoach = null;
+    }
+  }
+
+  cancel() {
+    if (this.isNewRecord) {
+      this.coaches.pop();
+      this.isNewRecord = false;
+    }
+    this.editedCoach = null;
+  }
+
+  deleteCoach(coach: Coach) {
+    this.service.deleteCoach(coach.coachId).subscribe(data => {
+      this.statusMessage = 'Дані успішно видалено',
+        this.loadCoaches();
+    });
   }
 
 }

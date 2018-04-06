@@ -2,18 +2,17 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { CoachRoutingModule } from './coach-routing.module';
-import { CoachCreateComponent } from './coach-create/coach-create.component';
 import { CoachListComponent } from './coach-list/coach-list.component';
 import {FormsModule} from "@angular/forms";
-import {CoachService} from "./coach.service";
+import {MaterialModule} from "../material.module";
 
 @NgModule({
   imports: [
     CommonModule,
     CoachRoutingModule,
     FormsModule,
+    MaterialModule,
   ],
-  declarations: [CoachCreateComponent, CoachListComponent],
-  providers: [CoachService]
+  declarations: [CoachListComponent]
 })
 export class CoachModule { }

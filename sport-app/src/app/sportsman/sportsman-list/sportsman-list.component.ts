@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {Sportsman} from "../Sportsman";
 import {SportsmanService} from "../sportsman.service";
 import {Router} from "@angular/router";
-import {Coach} from "../../coach/Coach";
 
 @Component({
   selector: 'app-sportsman-list',
