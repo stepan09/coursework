@@ -39,7 +39,7 @@ public class CourtController {
     }
 
     @PutMapping("/courts/{id}")
-    public Court updateCourte(@PathVariable(value = "id") Long courtId,
+    public Court updateCourt(@PathVariable(value = "id") Long courtId,
                               @Valid @RequestBody Court courtDetails) {
         Court court = courtRepository.findById(courtId)
                 .orElseThrow(() -> new ResourceNotFoundException("Gym", "id", courtId));
