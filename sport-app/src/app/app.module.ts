@@ -13,6 +13,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MaterialModule} from "./material.module";
 import {SportClubModule} from "./sport-club/sport-club.module";
 import {OrganizerModule} from "./organizer/organizer.module";
+import {CompetitionModule} from "./competition/competition.module";
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import {OrganizerModule} from "./organizer/organizer.module";
     StadiumModule,
     SportClubModule,
     OrganizerModule,
+    CompetitionModule,
     HttpClientModule,
     FormsModule,
     BrowserAnimationsModule,
@@ -38,6 +40,7 @@ import {OrganizerModule} from "./organizer/organizer.module";
     SportClubModule,
     OrganizerModule,
     CoachModule,
+    CompetitionModule,
   ],
   bootstrap: [AppComponent]
 })

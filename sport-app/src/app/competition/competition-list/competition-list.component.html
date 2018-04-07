@@ -1,0 +1,67 @@
+<h1 class="text-center">Список змагань</h1>
+<button mat-icon-button color="warn" (click)="addCompetition()">
+  <mat-icon>person_add</mat-icon>
+</button>
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <td>#</td>
+    <td>Назва</td>
+    <td>Старт</td>
+    <td>Фініш</td>
+    <td></td>
+    <td></td>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let competition of competitions">
+    <ng-template [ngTemplateOutlet]="loadTemplate(competition)"
+                 [ngTemplateOutletContext]="{ $implicit: competition}">
+    </ng-template>
+  </tr>
+  </tbody>
+</table>
+<div>{{statusMessage}}</div>
+
+
+<!--шаблон для читання-->
+<ng-template #readOnlyTemplate let-competition>
+  <td>{{competition.competitionId}}</td>
+  <td>{{competition.name}}</td>
+  <td>{{competition.startDate}}</td>
+  <td>{{competition.finishDate}}</td>
+  <td>
+    <input type="button" value="Змінити" class="btn btn-success" (click)="editCompetition(competition)" />
+  </td>
+  <td>
+    <input type="button" value="Видалити" (click)="deleteCompetition(competition)" class="btn btn-danger" />
+  </td>
+</ng-template>
+
+<!--шаблон для редагування-->
+<ng-template #editTemplate>
+  <td>
+    <input type="text" [(ngModel)]="editedCompetition.competitionId"  disabled class="form-control" />
+  </td>
+  <td>
+    <mat-form-field>
+      <input matInput type="text" placeholder="Прізвище" [(ngModel)]="editedCompetition.name" class="form-control" />
+      <button mat-button *ngIf="editedCompetition.name" matSuffix mat-icon-button aria-label="Clear" (click)="editedCompetition.name=''">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+  </td>
+  <td>
+    <input type="date" [(ngModel)]="editedCompetition.startDate" class="form-control" />
+  </td>
+  <td>
+    <input type="date" [(ngModel)]="editedCompetition.finishDate" class="form-control" />
+  </td>
+  <td>
+  <td>
+    <input type="button" value="Зберегти" (click)="saveCompetition()" class="btn btn-outline-success" />
+  </td>
+  <td>
+    <input type="button" value="Відмінити" (click)="cancel()" class="btn btn-outline-warning" />
+  </td>
+</ng-template>
