@@ -14,6 +14,7 @@ import {MaterialModule} from "./material.module";
 import {SportClubModule} from "./sport-club/sport-club.module";
 import {OrganizerModule} from "./organizer/organizer.module";
 import {CompetitionModule} from "./competition/competition.module";
+import {CourtModule} from "./court/court.module";
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import {CompetitionModule} from "./competition/competition.module";
     SportClubModule,
     OrganizerModule,
     CompetitionModule,
+    CourtModule,
     HttpClientModule,
     FormsModule,
     BrowserAnimationsModule,
@@ -41,6 +43,7 @@ import {CompetitionModule} from "./competition/competition.module";
     OrganizerModule,
     CoachModule,
     CompetitionModule,
+    CourtModule
   ],
   bootstrap: [AppComponent]
 })

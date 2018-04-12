@@ -1,0 +1,81 @@
+<h1>Список тенісних кортів</h1>
+<button mat-icon-button color="warn" (click)="addCourt()">
+  <mat-icon>person_add</mat-icon>
+</button>
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <td>#</td>
+    <td>Назва</td>
+    <td>Дата заснування</td>
+    <td>Адреса</td>
+    <td>Тип покриття</td>
+    <td></td>
+    <td></td>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let court of courts">
+    <ng-template [ngTemplateOutlet]="loadTemplate(court)"
+                 [ngTemplateOutletContext]="{ $implicit: court}">
+    </ng-template>
+  </tr>
+  </tbody>
+</table>
+<div>{{statusMessage}}</div>
+
+
+<!--шаблон для читання-->
+<ng-template #readOnlyTemplate let-court>
+  <td>{{court.courtId}}</td>
+  <td>{{court.name}}</td>
+  <td>{{court.foundationDate}}</td>
+  <td>{{court.address}}</td>
+  <td>{{court.coverType}}</td>
+  <td>
+    <input type="button" value="Змінити" class="btn btn-primary" (click)="editCourt(court)" />
+  </td>
+  <td>
+    <input type="button" value="Видалити" (click)="deleteCourt(court)" class="btn btn-danger" />
+  </td>
+</ng-template>
+
+<!--шаблон для редагування-->
+<ng-template #editTemplate>
+  <td>
+    <input type="text" [(ngModel)]="editedCourt.courtId"  disabled class="form-control" />
+  </td>
+  <td>
+    <mat-form-field>
+      <input matInput type="text" placeholder="Назва" [(ngModel)]="editedCourt.name" class="form-control" />
+      <button mat-button *ngIf="editedCourt.name" matSuffix mat-icon-button aria-label="Clear" (click)="editedCourt.name=''">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+  </td>
+  <td>
+    <input type="date" [(ngModel)]="editedCourt.foundationDate" class="form-control" />
+  </td>
+  <td>
+    <mat-form-field>
+      <input matInput type="text" placeholder="Адреса" [(ngModel)]="editedCourt.address" class="form-control" />
+      <button mat-button *ngIf="editedCourt.name" matSuffix mat-icon-button aria-label="Clear" (click)="editedCourt.name=''">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+  </td>
+  <td>
+    <mat-form-field>
+      <input matInput type="text" placeholder="Вмістимість" [(ngModel)]="editedCourt.coverType" class="form-control" />
+      <button mat-button *ngIf="editedCourt.coverType" matSuffix mat-icon-button aria-label="Clear" (click)="editedCourt.coverType=''">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+  </td>
+  <td>
+    <input type="button" value="Зберегти" (click)="saveCourt()" class="btn btn-success" />
+  </td>
+  <td>
+    <input type="button" value="Відмінити" (click)="cancel()" class="btn btn-warning" />
+  </td>
+</ng-template>

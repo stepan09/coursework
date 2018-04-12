@@ -64,7 +64,7 @@
   <td>
     <mat-form-field>
       <input matInput type="text" placeholder="Адреса" [(ngModel)]="editedStadium.address" class="form-control" />
-        <button mat-button *ngIf="editedStadium.name" matSuffix mat-icon-button aria-label="Clear" (click)="editedStadium.name=''">
+        <button mat-button *ngIf="editedStadium.address" matSuffix mat-icon-button aria-label="Clear" (click)="editedStadium.address=''">
           <mat-icon>close</mat-icon>
         </button>
     </mat-form-field>
@@ -72,7 +72,7 @@
   <td>
     <mat-form-field>
     <input matInput type="text" placeholder="Вмістимість" [(ngModel)]="editedStadium.capacity" class="form-control" />
-    <button mat-button *ngIf="editedStadium.name" matSuffix mat-icon-button aria-label="Clear" (click)="editedStadium.name=''">
+    <button mat-button *ngIf="editedStadium.capacity" matSuffix mat-icon-button aria-label="Clear" (click)="editedStadium.capacity=''">
       <mat-icon>close</mat-icon>
     </button>
     </mat-form-field>
