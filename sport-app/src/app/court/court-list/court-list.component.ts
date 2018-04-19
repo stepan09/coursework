@@ -44,7 +44,7 @@ export class CourtListComponent implements OnInit {
 
   loadTemplate(court: Court) {
     if (this.editedCourt && this.editedCourt.courtId == court.courtId) {
-      return this.editTemplate
+      return this.editTemplate;
     } else {
       return this.readOnlyTemplate;
     }

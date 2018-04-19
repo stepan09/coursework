@@ -15,6 +15,8 @@ import {SportClubModule} from "./sport-club/sport-club.module";
 import {OrganizerModule} from "./organizer/organizer.module";
 import {CompetitionModule} from "./competition/competition.module";
 import {CourtModule} from "./court/court.module";
+import {GymModule} from "./gym/gym.module";
+import {SportKindModule} from "./sport-kind/sport-kind.module";
 
 
 @NgModule({
@@ -31,6 +33,8 @@ import {CourtModule} from "./court/court.module";
     OrganizerModule,
     CompetitionModule,
     CourtModule,
+    GymModule,
+    SportKindModule,
     HttpClientModule,
     FormsModule,
     BrowserAnimationsModule,
@@ -43,7 +47,9 @@ import {CourtModule} from "./court/court.module";
     OrganizerModule,
     CoachModule,
     CompetitionModule,
-    CourtModule
+    CourtModule,
+    GymModule,
+    SportKindModule
   ],
   bootstrap: [AppComponent]
 })
