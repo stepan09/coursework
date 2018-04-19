@@ -1,0 +1,56 @@
+<h1>Список видів спорту</h1>
+<button mat-icon-button color="warn" (click)="addSportKind()">
+  <mat-icon>group_add</mat-icon>
+</button>
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <td>#</td>
+    <td>Назва</td>
+    <td></td>
+    <td></td>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let sportKind of sportKinds">
+    <ng-template [ngTemplateOutlet]="loadTemplate(sportKind)"
+                 [ngTemplateOutletContext]="{ $implicit: sportKind}">
+    </ng-template>
+  </tr>
+  </tbody>
+</table>
+<div>{{statusMessage}}</div>
+
+
+<!--шаблон для читання-->
+<ng-template #readOnlyTemplate let-sportKind>
+  <td>{{sportKind.sportKindId}}</td>
+  <td>{{sportKind.name}}</td>
+  <td>
+    <input type="button" value="Змінити" class="btn btn-primary" (click)="editSportKind(sportKind)" />
+  </td>
+  <td>
+    <input type="button" value="Видалити" (click)="deleteSportKind(sportKind)" class="btn btn-danger" />
+  </td>
+</ng-template>
+
+<!--шаблон для редагування-->
+<ng-template #editTemplate>
+  <td>
+    <input type="text" [(ngModel)]="editedSportKind.sportKindId"  disabled class="form-control" />
+  </td>
+  <td>
+    <mat-form-field>
+      <input matInput type="text" placeholder="Назва" [(ngModel)]="editedSportKind.name" class="form-control" />
+      <button mat-button *ngIf="editedSportKind.name" matSuffix mat-icon-button aria-label="Clear" (click)="editedSportKind.name=''">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+  </td>
+  <td>
+    <input type="button" value="Зберегти" (click)="saveSportKind()" class="btn btn-success" />
+  </td>
+  <td>
+    <input type="button" value="Відмінити" (click)="cancel()" class="btn btn-warning" />
+  </td>
+</ng-template>

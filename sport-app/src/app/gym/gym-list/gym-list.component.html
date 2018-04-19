@@ -1,0 +1,71 @@
+<h1>Список спортзалів</h1>
+<button mat-icon-button color="warn" (click)="addGym()">
+  <mat-icon>person_add</mat-icon>
+</button>
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <td>#</td>
+    <td>Назва</td>
+    <td>Дата заснування</td>
+    <td>Адреса</td>
+    <td></td>
+    <td></td>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let gym of gyms">
+    <ng-template [ngTemplateOutlet]="loadTemplate(gym)"
+                 [ngTemplateOutletContext]="{ $implicit: gym}">
+    </ng-template>
+  </tr>
+  </tbody>
+</table>
+<div>{{statusMessage}}</div>
+
+
+<!--шаблон для читання-->
+<ng-template #readOnlyTemplate let-gym>
+  <td>{{gym.gymId}}</td>
+  <td>{{gym.name}}</td>
+  <td>{{gym.foundationDate}}</td>
+  <td>{{gym.address}}</td>
+  <td>
+    <input type="button" value="Змінити" class="btn btn-primary" (click)="editGym(gym)" />
+  </td>
+  <td>
+    <input type="button" value="Видалити" (click)="deleteGym(gym)" class="btn btn-danger" />
+  </td>
+</ng-template>
+
+<!--шаблон для редагування-->
+<ng-template #editTemplate>
+  <td>
+    <input type="text" [(ngModel)]="editedGym.gymId"  disabled class="form-control" />
+  </td>
+  <td>
+    <mat-form-field>
+      <input matInput type="text" placeholder="Назва" [(ngModel)]="editedGym.name" class="form-control" />
+      <button mat-button *ngIf="editedGym.name" matSuffix mat-icon-button aria-label="Clear" (click)="editedGym.name=''">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+  </td>
+  <td>
+    <input type="date" [(ngModel)]="editedGym.foundationDate" class="form-control" />
+  </td>
+  <td>
+    <mat-form-field>
+      <input matInput type="text" placeholder="Адреса" [(ngModel)]="editedGym.address" class="form-control" />
+      <button mat-button *ngIf="editedGym.address" matSuffix mat-icon-button aria-label="Clear" (click)="editedGym.address=''">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+  </td>
+  <td>
+    <input type="button" value="Зберегти" (click)="saveGym()" class="btn btn-success" />
+  </td>
+  <td>
+    <input type="button" value="Відмінити" (click)="cancel()" class="btn btn-warning" />
+  </td>
+</ng-template>
