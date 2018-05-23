@@ -2,6 +2,7 @@ package oli.coursework.sport.controller;
 
 import oli.coursework.sport.exception.ResourceNotFoundException;
 import oli.coursework.sport.model.Coach;
+import oli.coursework.sport.model.Sportsman;
 import oli.coursework.sport.repository.CoachRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,11 @@ public class CoachController {
 
     @Autowired
     private CoachRepository coachRepository;
+
+    @GetMapping("/coach-by-sportsman/{id}")
+    public List<Coach> getCoachesBySportsmanId(@PathVariable(value = "id") Long sportsmanId){
+        return coachRepository.findBySportsmen_SportsmanId(sportsmanId);
+    }
 
     @GetMapping("/coaches")
     public List<Coach> getAllCoaches() {return coachRepository.findAll();}
@@ -42,6 +48,7 @@ public class CoachController {
         coach.setFirstName(coachDetails.getFirstName());
         coach.setMiddleName(coachDetails.getMiddleName());
         coach.setBirthDate(coachDetails.getBirthDate());
+        coach.setSportsmen(coachDetails.getSportsmen());
 
         Coach updateCoach = coachRepository.save(coach);
 
@@ -57,4 +64,5 @@ public class CoachController {
 
         return ResponseEntity.ok().build();
     }
+
 }

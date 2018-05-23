@@ -22,6 +22,16 @@ public class SportsmanController {
     @Autowired
     private SportsmanRepository sportsmanRepository;
 
+    @GetMapping("/sportsmen-by-coach/{id}")
+    public List<Sportsman> getSportsmenByCoachId(@PathVariable(value = "id") Long id) {
+        return sportsmanRepository.findByCoaches_CoachId(id);
+    }
+
+    @GetMapping("/sportsmen/{id}")
+    public Sportsman getById(@PathVariable(value = "id") Long id) {
+        return sportsmanRepository.getSportsmanBySportsmanId(id);
+    }
+
     @GetMapping("/sportsmen")
     public List<Sportsman> getAllSportsmen(){
         return sportsmanRepository.findAll();
@@ -32,11 +42,11 @@ public class SportsmanController {
         return sportsmanRepository.save(sportsman);
     }
 
-    @GetMapping("/sportsmen/{id}")
+    /*@GetMapping("/sportsmen/{id}")
     public Sportsman getSportsmanById(@PathVariable(value = "id") Long sportsmanId){
         return sportsmanRepository.findById(sportsmanId)
                 .orElseThrow(() -> new ResourceNotFoundException("Sportsman", "id", sportsmanId));
-    }
+    }*/
 
     @PutMapping("sportsmen/{id}")
     public Sportsman updateSportsman(@PathVariable(value = "id") Long sportsmanId,
@@ -48,6 +58,8 @@ public class SportsmanController {
         sportsman.setFirstName(sportsmanDetails.getFirstName());
         sportsman.setMiddleName(sportsmanDetails.getMiddleName());
         sportsman.setBirthDate(sportsmanDetails.getBirthDate());
+        sportsman.setSportClub(sportsmanDetails.getSportClub());
+        sportsman.setSportKinds(sportsmanDetails.getSportKinds());
 
         Sportsman updateSportsman = sportsmanRepository.save(sportsman);
         return updateSportsman;

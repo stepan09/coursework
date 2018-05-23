@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Date;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -47,6 +48,9 @@ public class CompetitionController {
         competition.setName(competitionDetails.getName());
         competition.setStartDate(competitionDetails.getStartDate());
         competition.setFinishDate(competitionDetails.getFinishDate());
+        competition.setOrganizer(competitionDetails.getOrganizer());
+        competition.setSportKind(competitionDetails.getSportKind());
+        competition.setSportsmen(competitionDetails.getSportsmen());
 
         Competition updateCompetition = competitionRepository.save(competition);
 
@@ -61,5 +65,10 @@ public class CompetitionController {
         competitionRepository.delete(competition);
 
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/competitions/{first-date}/{second-date}")
+    public List <Competition> getCompetitionByDate(@PathVariable(value = "first-date") Date firstDate, @PathVariable(value = "second-date") Date secondDate) {
+        return competitionRepository.getAll(firstDate, secondDate);
     }
 }

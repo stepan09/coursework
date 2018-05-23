@@ -1,10 +1,10 @@
 export class SportKind {
 
-  sportKindId: number;
+  id: number;
   name: string;
 
   constructor(sportKindId: number, name: string) {
-    this.sportKindId = sportKindId;
+    this.id = sportKindId;
     this.name = name;
   }
 }

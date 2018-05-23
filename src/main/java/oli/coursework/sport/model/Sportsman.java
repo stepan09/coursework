@@ -4,6 +4,7 @@
 
 package oli.coursework.sport.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -15,6 +16,7 @@ import java.util.List;
 @Entity
 @Table(name = "sportsman")
 @EntityListeners(AuditingEntityListener.class)
+//@JsonIdentityInfo(generator=ObjectIdGenerators.UUIDGenerator.class, property="@Id")
 public class Sportsman implements Serializable {
     @Id
     @Column(name = "sportsman_id")
@@ -36,12 +38,11 @@ public class Sportsman implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date birthDate;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "coach_has_sportsman", joinColumns = @JoinColumn(name = "sportsman_sportsman_id", referencedColumnName = "sportsman_id"),
-    inverseJoinColumns = @JoinColumn(name = "coach_coach_id", referencedColumnName = "coach_id"))
+    @ManyToMany(mappedBy = "sportsmen")
+    @JsonIgnore
     private List<Coach> coaches;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.REMOVE)
     @JoinTable(name = "sportsman_has_kind_of_sport", joinColumns = @JoinColumn(name = "sportsman_sportsman_id", referencedColumnName = "sportsman_id"),
     inverseJoinColumns = @JoinColumn(name = "kind_of_sport_id", referencedColumnName = "id"))
     private List<SportKind> sportKinds;
@@ -50,6 +51,7 @@ public class Sportsman implements Serializable {
     @JoinColumn(name = "sport_club_sport_club_id", nullable = false)
     private SportClub sportClub;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "sportsmen")
     private List<Competition> competitions;
 
@@ -61,7 +63,7 @@ public class Sportsman implements Serializable {
         this.firstName = firstName;
         this.middleName = middleName;
         this.birthDate = birthDate;
-        this.coaches = coaches;
+        /*this.coaches = coaches;*/
         this.sportKinds = sportKinds;
         this.sportClub = sportClub;
         this.competitions = competitions;

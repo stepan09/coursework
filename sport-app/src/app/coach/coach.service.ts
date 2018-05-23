@@ -18,6 +18,7 @@ export class CoachService {
   }
 
   updateCoach(id: number, coach: Coach) {
+    console.log("lol");
     return this.http.put(this.url + '/' + id, coach);
   }
 

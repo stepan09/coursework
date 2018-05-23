@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
 import {CoachModule} from "./coach/coach.module";
-import {FormsModule} from "@angular/forms";
+import {FormControl, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {SportsmanModule} from "./sportsman/sportsman.module";
 import {StadiumModule} from "./stadium/stadium.module";
 import {HttpClientModule} from "@angular/common/http";

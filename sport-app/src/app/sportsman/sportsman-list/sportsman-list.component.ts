@@ -1,12 +1,18 @@
 import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {SportsmanService} from "../sportsman.service";
 import {Sportsman} from "../sportsman";
+import {SportKindService} from "../../sport-kind/sport-kind.service";
+import {SportKind} from "../../sport-kind/sportKind";
+import {SportClubService} from "../../sport-club/sport-club.service";
+import {SportClub} from "../../sport-club/sportClub";
+import {CoachService} from "../../coach/coach.service";
+import {Coach} from "../../coach/coach";
 
 @Component({
   selector: 'app-sportsman-list',
   templateUrl: './sportsman-list.component.html',
   styleUrls: ['./sportsman-list.component.css'],
-  providers: [SportsmanService]
+  providers: [SportsmanService, SportKindService, SportClubService, CoachService]
 })
 export class SportsmanListComponent implements OnInit {
 
@@ -15,11 +21,19 @@ export class SportsmanListComponent implements OnInit {
 
   editedSportsman: Sportsman;
   sportsmen: Array<Sportsman>;
+  sportKinds: Array<SportKind>;
+  sportClubs: Array<SportClub>;
+  coaches: Array<Coach>;
+  searchStr = '';
   isNewRecord: boolean;
   statusMessage: string;
 
-  constructor(private service: SportsmanService) {
+  constructor(private sportsmanService: SportsmanService,
+              private sportKindService: SportKindService,
+              private sportClubService: SportClubService) {
     this.sportsmen = new Array<Sportsman>();
+    this.sportKinds = new Array<SportKind>();
+    this.sportClubs = new Array<SportClub>();
   }
 
   ngOnInit() {
@@ -27,19 +41,27 @@ export class SportsmanListComponent implements OnInit {
   }
 
   private loadSportsmen() {
-    this.service.getSportsmen().subscribe((data: Sportsman[]) => {
+    this.sportsmanService.getSportsmen().subscribe((data: Sportsman[]) => {
       this.sportsmen = data;
+    });
+
+    this.sportKindService.getSportKinds().subscribe((data: SportKind[]) => {
+      this.sportKinds = data;
+    });
+
+    this.sportClubService.getSportClubs().subscribe((data: SportClub[]) => {
+      this.sportClubs = data
     });
   }
 
   addSportsman() {
-    this.editedSportsman = new Sportsman(0, null,null,null,null, null);
+    this.editedSportsman = new Sportsman(0, null,null,null,null, null, null);
     this.sportsmen.push(this.editedSportsman);
     this.isNewRecord = true;
   }
 
   editSportsman(sportsman: Sportsman) {
-    this.editedSportsman = new Sportsman(sportsman.sportsmanId, sportsman.lastName, sportsman.firstName, sportsman.middleName, sportsman.birthDate, sportsman.sportClub);
+    this.editedSportsman = new Sportsman(sportsman.sportsmanId, sportsman.lastName, sportsman.firstName, sportsman.middleName, sportsman.birthDate, sportsman.sportClub, sportsman.sportKinds);
   }
 
   loadTemplate(sportsman: Sportsman) {
@@ -52,14 +74,14 @@ export class SportsmanListComponent implements OnInit {
 
   saveSportsman(sportsman: Sportsman) {
     if (this.isNewRecord) {
-      this.service.createSportsman(this.editedSportsman).subscribe(data => {
+      this.sportsmanService.createSportsman(this.editedSportsman).subscribe(data => {
         this.statusMessage = 'Дані успішно добавлено',
           this.loadSportsmen();
       });
       this.isNewRecord = false;
       this.editedSportsman = null;
     } else {
-      this.service.updateSportsman(this.editedSportsman.sportsmanId, this.editedSportsman).subscribe(data => {
+      this.sportsmanService.updateSportsman(this.editedSportsman.sportsmanId, this.editedSportsman).subscribe(data => {
         this.statusMessage = 'Дані успішно оновлено',
           this.loadSportsmen();
       });
@@ -76,7 +98,7 @@ export class SportsmanListComponent implements OnInit {
   }
 
   deleteSportsman(sportsman: Sportsman) {
-    this.service.deleteSportsman(sportsman.sportsmanId).subscribe(data => {
+    this.sportsmanService.deleteSportsman(sportsman.sportsmanId).subscribe(data => {
       this.statusMessage = 'Дані успішно видалено';
       this.loadSportsmen();
     });

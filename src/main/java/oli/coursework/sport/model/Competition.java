@@ -38,7 +38,7 @@ public class Competition implements Serializable {
     @JoinColumn(name = "kind_of_sport_id", nullable = false)
     private SportKind sportKind;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.REMOVE)
     @JoinTable(name = "competition_has_sportsman", joinColumns = @JoinColumn(name = "competition_competition_id", referencedColumnName = "competition_id"),
     inverseJoinColumns = @JoinColumn(name = "sportsman_sportsman_id", referencedColumnName = "sportsman_id"))
     private List<Sportsman> sportsmen;
@@ -47,18 +47,18 @@ public class Competition implements Serializable {
     @JoinColumn(name = "organizer_organizer_id", nullable = false)
     private Organizer organizer;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.REMOVE)
     @JoinTable(name = "competition_has_stadium", joinColumns = @JoinColumn(name = "competition_competition_id", referencedColumnName = "competition_id"),
     inverseJoinColumns = @JoinColumn(name = "stadium_stadium_id", referencedColumnName = "stadium_id"))
     private List<Stadium> stadiums;
 
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.REMOVE)
     @JoinTable(name = "competition_has_court", joinColumns = @JoinColumn(name = "competition_competition_id", referencedColumnName = "competition_id"),
             inverseJoinColumns = @JoinColumn(name = "court_court_id", referencedColumnName = "court_id"))
     private List<Court> courts;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.REMOVE)
     @JoinTable(name = "competition_has_gym", joinColumns = @JoinColumn(name = "competition_competition_id", referencedColumnName = "competition_id"),
             inverseJoinColumns = @JoinColumn(name = "gym_gym_id", referencedColumnName = "gym_id"))
     private List<Gym> gyms;

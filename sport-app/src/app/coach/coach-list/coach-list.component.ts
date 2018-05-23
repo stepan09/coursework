@@ -1,12 +1,15 @@
 import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {CoachService} from "../coach.service";
 import {Coach} from "../coach";
+import {Sportsman} from "../../sportsman/sportsman";
+import {SportsmanService} from "../../sportsman/sportsman.service";
+import {FormControl} from "@angular/forms";
 
 @Component({
   selector: 'app-coach-list',
   templateUrl: './coach-list.component.html',
   styleUrls: ['./coach-list.component.css'],
-  providers: [CoachService]
+  providers: [CoachService, SportsmanService]
 })
 export class CoachListComponent implements OnInit {
 
@@ -15,11 +18,15 @@ export class CoachListComponent implements OnInit {
 
   editedCoach: Coach;
   coaches: Array<Coach>;
+  sportsmen: Array<Sportsman>;
+  searchStr = '';
   isNewRecord: boolean;
   statusMessage: string;
 
-  constructor(private service: CoachService) {
+
+  constructor(private service: CoachService, private serv: SportsmanService) {
     this.coaches = new Array<Coach>();
+    this.sportsmen = new Array<Sportsman>();
   }
 
   ngOnInit() {
@@ -30,16 +37,20 @@ export class CoachListComponent implements OnInit {
     this.service.getCoaches().subscribe((data: Coach[]) => {
       this.coaches = data;
     });
+
+    this.serv.getSportsmen().subscribe((data: Sportsman[]) => {
+      this.sportsmen = data;
+    })
   }
 
   addCoach() {
-    this.editedCoach = new Coach(0, null,null,null,null);
+    this.editedCoach = new Coach(0, null,null,null,null, null);
     this.coaches.push(this.editedCoach);
     this.isNewRecord = true;
   }
 
   editCoach(coach: Coach) {
-    this.editedCoach = new Coach(coach.coachId, coach.lastName, coach.firstName, coach.middleName, coach.birthDate);
+    this.editedCoach = new Coach(coach.coachId, coach.lastName, coach.firstName, coach.middleName, coach.birthDate, coach.sportsmen);
   }
 
   loadTemplate(coach: Coach) {
@@ -59,8 +70,9 @@ export class CoachListComponent implements OnInit {
       this.isNewRecord = false;
       this.editedCoach = null;
     } else {
+      console.log("lol");
       this.service.updateCoach(this.editedCoach.coachId, this.editedCoach).subscribe(data => {
-        this.statusMessage = 'Дані успішно оновлено',
+        this.statusMessage = 'Дані успішно оновлено', console.log("lol");
           this.loadCoaches();
       });
       this.editedCoach = null;

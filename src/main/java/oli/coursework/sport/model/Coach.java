@@ -15,6 +15,7 @@ import java.util.List;
 @Entity
 @Table(name = "coach")
 @EntityListeners(AuditingEntityListener.class)
+//@JsonIdentityInfo(generator=ObjectIdGenerators.UUIDGenerator.class, property="@Id")
 public class Coach implements Serializable {
 
     @Id
@@ -37,7 +38,9 @@ public class Coach implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date birthDate;
 
-    @ManyToMany(mappedBy = "coaches")
+    @ManyToMany(cascade = CascadeType.REMOVE)
+    @JoinTable(name = "coach_has_sportsman", joinColumns = @JoinColumn(name = "coach_coach_id", referencedColumnName = "coach_id"),
+            inverseJoinColumns = @JoinColumn(name = "sportsman_sportsman_id", referencedColumnName = "sportsman_id"))
     private List<Sportsman> sportsmen;
 
     public Coach() {

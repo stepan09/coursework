@@ -24,7 +24,7 @@
 
 <!--шаблон для читання-->
 <ng-template #readOnlyTemplate let-sportKind>
-  <td>{{sportKind.sportKindId}}</td>
+  <td>{{sportKind.id}}</td>
   <td>{{sportKind.name}}</td>
   <td>
     <input type="button" value="Змінити" class="btn btn-primary" (click)="editSportKind(sportKind)" />
@@ -37,7 +37,7 @@
 <!--шаблон для редагування-->
 <ng-template #editTemplate>
   <td>
-    <input type="text" [(ngModel)]="editedSportKind.sportKindId"  disabled class="form-control" />
+    <input type="text" [(ngModel)]="editedSportKind.id" disabled class="form-control" />
   </td>
   <td>
     <mat-form-field>

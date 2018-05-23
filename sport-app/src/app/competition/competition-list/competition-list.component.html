@@ -9,6 +9,9 @@
     <td>Назва</td>
     <td>Старт</td>
     <td>Фініш</td>
+    <td>Організатор</td>
+    <td>Вид спорту</td>
+    <td>Спортсмени</td>
     <td></td>
     <td></td>
   </tr>
@@ -30,6 +33,15 @@
   <td>{{competition.name}}</td>
   <td>{{competition.startDate}}</td>
   <td>{{competition.finishDate}}</td>
+  <td>{{competition.organizer.lastName}} {{competition.organizer.firstName}}</td>
+  <td>{{competition.sportKind.name}}</td>
+  <td>
+    <mat-select placeholder="Спортсмени">
+      <mat-option *ngFor="let sportsman of competition.sportsmen">
+        {{sportsman.lastName}} {{sportsman.firstName}}
+      </mat-option>
+    </mat-select>
+  </td>
   <td>
     <input type="button" value="Змінити" class="btn btn-success" (click)="editCompetition(competition)" />
   </td>
@@ -40,9 +52,7 @@
 
 <!--шаблон для редагування-->
 <ng-template #editTemplate>
-  <td>
-    <input type="text" [(ngModel)]="editedCompetition.competitionId"  disabled class="form-control" />
-  </td>
+  <td>{{editedCompetition.competitionId}}</td>
   <td>
     <mat-form-field>
       <input matInput type="text" placeholder="Прізвище" [(ngModel)]="editedCompetition.name" class="form-control" />
@@ -58,6 +68,26 @@
     <input type="date" [(ngModel)]="editedCompetition.finishDate" class="form-control" />
   </td>
   <td>
+    <mat-select [(ngModel)]="editedCompetition.organizer" placeholder="Організатори">
+      <mat-option *ngFor="let organizer of organizers" [value]="organizer">
+        {{organizer.lastName}} {{organizer.firstName}}
+      </mat-option>
+    </mat-select>
+  </td>
+  <td>
+    <mat-select [(ngModel)]="editedCompetition.sportKind" placeholder="Вид спорту">
+      <mat-option *ngFor="let sportKind of sportKinds" [value]="sportKind">
+        {{sportKind.name}}
+      </mat-option>
+    </mat-select>
+  </td>
+  <td>
+    <mat-select [(ngModel)]="editedCompetition.sportsmen" placeholder="Спортсмени" multiple>
+      <mat-option *ngFor="let sportsman of sportsmen" [value]="sportsman" >
+        {{sportsman.lastName}} {{sportsman.firstName}}
+      </mat-option>
+    </mat-select>
+  </td>
   <td>
     <input type="button" value="Зберегти" (click)="saveCompetition()" class="btn btn-outline-success" />
   </td>

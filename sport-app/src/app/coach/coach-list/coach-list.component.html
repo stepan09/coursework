@@ -1,7 +1,18 @@
 <h1 class="text-center">Список тренерів</h1>
-<button mat-icon-button color="warn" (click)="addCoach()">
-  <mat-icon>person_add</mat-icon>
-</button>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-1">
+      <button mat-icon-button color="warn" (click)="addCoach()">
+        <mat-icon>person_add</mat-icon>
+      </button>
+    </div>
+    <!--<div class="col-md-11">
+      <input type="text" class="form-control"  [(ngModel)]="searchStr" placeholder="Пошук по прізвищу">
+    </div>-->
+  </div>
+  <br>
+</div>
 <table class="table table-striped">
   <thead>
   <tr>
@@ -10,12 +21,13 @@
     <td>Ім'я</td>
     <td>По батькові</td>
     <td>Дата народження</td>
+    <td>Гравці</td>
     <td></td>
     <td></td>
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let coach of coaches">
+  <tr *ngFor="let coach of coaches ">
     <ng-template [ngTemplateOutlet]="loadTemplate(coach)"
                  [ngTemplateOutletContext]="{ $implicit: coach}">
     </ng-template>
@@ -32,6 +44,15 @@
   <td>{{coach.firstName}}</td>
   <td>{{coach.middleName}}</td>
   <td>{{coach.birthDate}}</td>
+  <td>
+    <mat-form-field>
+      <mat-select placeholder="Спортсмени">
+        <mat-option disabled="true" *ngFor="let sportsman of coach.sportsmen" [value]="sportsman.sportsmanId">
+          {{sportsman.lastName}} {{sportsman.firstName}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </td>
   <td>
     <input type="button" value="Змінити" class="btn btn-success" (click)="editCoach(coach)" />
   </td>
@@ -73,6 +94,12 @@
     <input type="date" [(ngModel)]="editedCoach.birthDate" class="form-control" />
   </td>
   <td>
+    <mat-select [(ngModel)]="editedCoach.sportsmen" multiple>
+      <mat-option *ngFor="let sportsman of sportsmen" [value]="sportsman">
+        {{sportsman.lastName}} {{sportsman.firstName}}
+      </mat-option>
+    </mat-select>
+  </td>
   <td>
     <input type="button" value="Зберегти" (click)="saveCoach()" class="btn btn-outline-success" />
   </td>

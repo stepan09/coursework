@@ -39,11 +39,11 @@ export class SportKindComponent implements OnInit {
   }
 
   editSportKind(sportKind: SportKind) {
-    this.editedSportKind = new SportKind(sportKind.sportKindId, sportKind.name);
+    this.editedSportKind = new SportKind(sportKind.id, sportKind.name);
   }
 
   loadTemplate(sportKind: SportKind) {
-    if (this.editedSportKind && this.editedSportKind.sportKindId == sportKind.sportKindId) {
+    if (this.editedSportKind && this.editedSportKind.id == sportKind.id) {
       return this.editTemplate;
     } else {
       return this.readOnlyTemplate;
@@ -59,7 +59,7 @@ export class SportKindComponent implements OnInit {
       this.isNewRecord = false;
       this.editedSportKind = null;
     } else {
-      this.service.updateSportKind(this.editedSportKind.sportKindId, this.editedSportKind).subscribe(data => {
+      this.service.updateSportKind(this.editedSportKind.id, this.editedSportKind).subscribe(data => {
         this.statusMessage = 'Дані успішно оновлено',
           this.loadSportKind();
       });
@@ -76,7 +76,7 @@ export class SportKindComponent implements OnInit {
   }
 
   deleteSportKind(sportKind: SportKind) {
-    this.service.deleteSportKind(sportKind.sportKindId).subscribe(data => {
+    this.service.deleteSportKind(sportKind.id).subscribe(data => {
       this.statusMessage = 'Дані успішно видалено',
         this.loadSportKind();
     });

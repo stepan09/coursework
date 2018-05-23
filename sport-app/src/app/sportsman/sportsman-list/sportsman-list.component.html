@@ -2,6 +2,9 @@
 <button mat-icon-button color="warn" (click)="addSportsman()">
   <mat-icon>person_add</mat-icon>
 </button>
+<!--<mat-select placeholder="Тренери">
+  <mat-option *ngFor="let coach of coaches"></mat-option>
+</mat-select>-->
 <table class="table table-striped">
   <thead>
   <tr>
@@ -10,6 +13,8 @@
     <td>Ім'я</td>
     <td>По батькові</td>
     <td>Дата народження</td>
+    <td>Клуб</td>
+    <td>Види спорту</td>
     <td></td>
     <td></td>
   </tr>
@@ -32,6 +37,14 @@
   <td>{{sportsman.firstName}}</td>
   <td>{{sportsman.middleName}}</td>
   <td>{{sportsman.birthDate}}</td>
+  <td>{{sportsman.sportClub.name}}</td>
+  <td>
+    <mat-select placeholder="Види спорту">
+      <mat-option *ngFor="let sportKind of sportsman.sportKinds">
+        {{sportKind.name}}
+      </mat-option>
+    </mat-select>
+  </td>
   <td>
     <input type="button" value="Змінити" class="btn btn-success" (click)="editSportsman(sportsman)" />
   </td>
@@ -71,6 +84,20 @@
   </td>
   <td>
     <input type="date" [(ngModel)]="editedSportsman.birthDate" class="form-control" />
+  </td>
+  <td>
+    <mat-select [(ngModel)]="editedSportsman.sportClub" placeholder="Клуб">
+      <mat-option *ngFor="let sportClub of sportClubs" [value]="sportClub">
+        {{sportClub.name}}
+      </mat-option>
+    </mat-select>
+  </td>
+  <td>
+    <mat-select [(ngModel)]="editedSportsman.sportKinds" multiple>
+      <mat-option *ngFor="let sportKind of sportKinds" [value]="sportKind">
+        {{sportKind.name}}
+      </mat-option>
+    </mat-select>
   </td>
   <td>
   <td>
