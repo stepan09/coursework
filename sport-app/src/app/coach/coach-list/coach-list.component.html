@@ -7,9 +7,9 @@
         <mat-icon>person_add</mat-icon>
       </button>
     </div>
-    <!--<div class="col-md-11">
+    <div class="col-md-11">
       <input type="text" class="form-control"  [(ngModel)]="searchStr" placeholder="Пошук по прізвищу">
-    </div>-->
+    </div>
   </div>
   <br>
 </div>
@@ -27,7 +27,7 @@
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let coach of coaches ">
+  <tr *ngFor="let coach of coaches | search:searchStr">
     <ng-template [ngTemplateOutlet]="loadTemplate(coach)"
                  [ngTemplateOutletContext]="{ $implicit: coach}">
     </ng-template>
