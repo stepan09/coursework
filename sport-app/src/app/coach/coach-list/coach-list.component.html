@@ -1,5 +1,4 @@
 <h1 class="text-center">Список тренерів</h1>
-
 <div class="container">
   <div class="row">
     <div class="col-md-1">
@@ -12,6 +11,27 @@
     </div>
   </div>
   <br>
+  <div class="row">
+    <div class="col-md-3">
+      <mat-form-field>
+        <mat-select [(ngModel)]="sportsmanId" placeholder="Спортсмени">
+          <mat-option *ngFor="let sportsman of sportsmen" [value]="sportsman.sportsmanId">
+            {{sportsman.lastName}} {{sportsman.firstName}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-md-7">
+      <button class="btn btn-success"  (click)="getCoachBySportsmanId(sportsmanId)">
+        Пошук
+      </button>
+    </div>
+    <div class="col-md-1">
+      <button class="btn btn-success" (click)="ngOnInit()">
+        Усі
+      </button>
+    </div>
+  </div>
 </div>
 <table class="table table-striped">
   <thead>
@@ -21,7 +41,7 @@
     <td>Ім'я</td>
     <td>По батькові</td>
     <td>Дата народження</td>
-    <td>Гравці</td>
+    <td>Спортсмени</td>
     <td></td>
     <td></td>
   </tr>

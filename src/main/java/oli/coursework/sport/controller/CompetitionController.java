@@ -8,6 +8,7 @@ import oli.coursework.sport.exception.ResourceNotFoundException;
 import oli.coursework.sport.model.Competition;
 import oli.coursework.sport.repository.CompetitionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -68,7 +69,7 @@ public class CompetitionController {
     }
 
     @GetMapping("/competitions/{first-date}/{second-date}")
-    public List <Competition> getCompetitionByDate(@PathVariable(value = "first-date") Date firstDate, @PathVariable(value = "second-date") Date secondDate) {
+    public List <Competition> getCompetitionByDate(@PathVariable(value = "first-date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date firstDate, @PathVariable(value = "second-date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date secondDate) {
         return competitionRepository.getAll(firstDate, secondDate);
     }
 }

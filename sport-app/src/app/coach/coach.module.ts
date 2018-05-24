@@ -5,7 +5,7 @@ import { CoachRoutingModule } from './coach-routing.module';
 import { CoachListComponent } from './coach-list/coach-list.component';
 import {FormsModule} from "@angular/forms";
 import {MaterialModule} from "../material.module";
-import {SearchPipe} from "../search.pipe";
+import {SearchPipeModule} from "../search.pipe.module";
 
 @NgModule({
   imports: [
@@ -13,10 +13,10 @@ import {SearchPipe} from "../search.pipe";
     CoachRoutingModule,
     FormsModule,
     MaterialModule,
+    SearchPipeModule
   ],
   declarations: [
     CoachListComponent,
-    SearchPipe
   ]
 })
 export class CoachModule { }

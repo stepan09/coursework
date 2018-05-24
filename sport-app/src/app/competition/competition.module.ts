@@ -5,6 +5,7 @@ import { CompetitionRoutingModule } from './competition-routing.module';
 import { CompetitionListComponent } from './competition-list/competition-list.component';
 import {MaterialModule} from "../material.module";
 import {FormsModule} from "@angular/forms";
+import {SearchPipeModule} from "../search.pipe.module";
 
 @NgModule({
   imports: [
@@ -12,6 +13,7 @@ import {FormsModule} from "@angular/forms";
     CompetitionRoutingModule,
     FormsModule,
     MaterialModule,
+    SearchPipeModule
   ],
   declarations: [CompetitionListComponent]
 })

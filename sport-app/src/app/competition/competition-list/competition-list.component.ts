@@ -26,6 +26,9 @@ export class CompetitionListComponent implements OnInit {
   sportsmen: Array<Sportsman>;
   isNewRecord: boolean;
   statusMessage: string;
+  searchStr = '';
+  firstDate: Date;
+  secondDate: Date;
 
   constructor(private service: CompetitionService,
               private serv: OrganizerService,
@@ -56,6 +59,12 @@ export class CompetitionListComponent implements OnInit {
 
     this.sportsmanService.getSportsmen().subscribe((data: Sportsman[]) => {
       this.sportsmen = data;
+    });
+  }
+
+  getCompetitionsByDates(firstDate: Date, secondDate: Date) {
+    return this.service.getCompetitionsByDate(firstDate, secondDate).subscribe((data: Competition[]) => {
+      this.competitions = data;
     });
   }
 

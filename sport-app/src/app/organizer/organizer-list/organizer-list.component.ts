@@ -18,6 +18,7 @@ export class OrganizerListComponent implements OnInit {
   organizers: Array<Organizer>;
   isNewRecord: boolean;
   statusMessage: string;
+  searchStr = '';
 
   constructor(private serv: OrganizerService) {
     this.organizers = new Array<Organizer>();

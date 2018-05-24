@@ -22,6 +22,7 @@ export class CoachListComponent implements OnInit {
   searchStr = '';
   isNewRecord: boolean;
   statusMessage: string;
+  sportsmanId: number;
 
 
   constructor(private service: CoachService, private serv: SportsmanService) {
@@ -40,6 +41,12 @@ export class CoachListComponent implements OnInit {
 
     this.serv.getSportsmen().subscribe((data: Sportsman[]) => {
       this.sportsmen = data;
+    })
+  }
+
+  getCoachBySportsmanId(sportsmanId: number) {
+    this.service.getCoachesBySportsmanId(sportsmanId).subscribe((data: Coach[]) => {
+      this.coaches = data;
     })
   }
 

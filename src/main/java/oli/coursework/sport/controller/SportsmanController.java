@@ -27,9 +27,15 @@ public class SportsmanController {
         return sportsmanRepository.findByCoaches_CoachId(id);
     }
 
+    @GetMapping("/sportsmen-by-sport-kind/{id}")
+    public List<Sportsman> getSportsmenBySportKindId(@PathVariable(value = "id") Long sportKindId) {
+        return sportsmanRepository.findBySportKinds_Id(sportKindId);
+    }
+
     @GetMapping("/sportsmen/{id}")
-    public Sportsman getById(@PathVariable(value = "id") Long id) {
-        return sportsmanRepository.getSportsmanBySportsmanId(id);
+    public Sportsman getById(@PathVariable(value = "id") Long sportsmanId) {
+        return sportsmanRepository.findById(sportsmanId)
+                .orElseThrow(() -> new ResourceNotFoundException("Sportsman", "id", sportsmanId));
     }
 
     @GetMapping("/sportsmen")
@@ -41,12 +47,6 @@ public class SportsmanController {
     public Sportsman createSportsman(@Valid @RequestBody Sportsman sportsman){
         return sportsmanRepository.save(sportsman);
     }
-
-    /*@GetMapping("/sportsmen/{id}")
-    public Sportsman getSportsmanById(@PathVariable(value = "id") Long sportsmanId){
-        return sportsmanRepository.findById(sportsmanId)
-                .orElseThrow(() -> new ResourceNotFoundException("Sportsman", "id", sportsmanId));
-    }*/
 
     @PutMapping("sportsmen/{id}")
     public Sportsman updateSportsman(@PathVariable(value = "id") Long sportsmanId,

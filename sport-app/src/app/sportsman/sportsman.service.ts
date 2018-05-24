@@ -13,6 +13,14 @@ export class SportsmanService {
     return this.http.get(this.url);
   }
 
+  getSportsmenByCoachId(coachId: number) {
+    return this.http.get(this.url + '-by-coach/' + coachId);
+  }
+
+  getSportsmenBySportKindId(sportKindId: number) {
+    return this.http.get(this.url + '-by-sport-kind/' + sportKindId);
+  }
+
   createSportsman(sportsman: Sportsman) {
     return this.http.post(this.url, sportsman);
   }

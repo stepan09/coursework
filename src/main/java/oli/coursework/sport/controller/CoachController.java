@@ -19,7 +19,7 @@ public class CoachController {
     @Autowired
     private CoachRepository coachRepository;
 
-    @GetMapping("/coach-by-sportsman/{id}")
+    @GetMapping("/coaches-by-sportsman/{id}")
     public List<Coach> getCoachesBySportsmanId(@PathVariable(value = "id") Long sportsmanId){
         return coachRepository.findBySportsmen_SportsmanId(sportsmanId);
     }

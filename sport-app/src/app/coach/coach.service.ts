@@ -13,12 +13,15 @@ export class CoachService {
     return this.http.get(this.url);
   }
 
+  getCoachesBySportsmanId(sportsmanId: number) {
+    return this.http.get(this.url + '-by-sportsman/' + sportsmanId);
+  }
+
   createCoach(coach: Coach) {
     return this.http.post(this.url, coach);
   }
 
   updateCoach(id: number, coach: Coach) {
-    console.log("lol");
     return this.http.put(this.url + '/' + id, coach);
   }
 

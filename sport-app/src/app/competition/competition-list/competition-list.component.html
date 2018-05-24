@@ -1,7 +1,31 @@
 <h1 class="text-center">Список змагань</h1>
-<button mat-icon-button color="warn" (click)="addCompetition()">
-  <mat-icon>person_add</mat-icon>
-</button>
+<div class="container">
+  <div class="row">
+    <div class="col-md-1">
+      <button mat-icon-button color="warn" (click)="addCompetition()">
+        <mat-icon>person_add</mat-icon>
+      </button>
+    </div>
+    <div class="col-md-11">
+      <input type="text" class="form-control" [(ngModel)]="searchStr" placeholder="Пошук по назві">
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-md-2">
+      <input type="date" [(ngModel)]="firstDate" class="form-control">
+    </div>
+    <div class="col-md-2">
+      <input type="date" [(ngModel)]="secondDate" class="form-control">
+    </div>
+    <div class="col-md-2">
+      <button class="btn btn-success" (click)="getCompetitionsByDates(firstDate, secondDate)">
+        Пошук
+      </button>
+    </div>
+  </div>
+  <br>
+</div>
 <table class="table table-striped">
   <thead>
   <tr>
@@ -17,7 +41,7 @@
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let competition of competitions">
+  <tr *ngFor="let competition of competitions | searchForThings:searchStr">
     <ng-template [ngTemplateOutlet]="loadTemplate(competition)"
                  [ngTemplateOutletContext]="{ $implicit: competition}">
     </ng-template>

@@ -63,7 +63,7 @@ public class Sportsman implements Serializable {
         this.firstName = firstName;
         this.middleName = middleName;
         this.birthDate = birthDate;
-        /*this.coaches = coaches;*/
+        this.coaches = coaches;
         this.sportKinds = sportKinds;
         this.sportClub = sportClub;
         this.competitions = competitions;

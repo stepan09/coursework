@@ -1,10 +1,53 @@
 <h1 class="text-center">Список спортсменів</h1>
-<button mat-icon-button color="warn" (click)="addSportsman()">
-  <mat-icon>person_add</mat-icon>
-</button>
-<!--<mat-select placeholder="Тренери">
-  <mat-option *ngFor="let coach of coaches"></mat-option>
-</mat-select>-->
+<div class="container">
+  <div class="row">
+    <div class="col-md-1">
+      <button mat-icon-button color="warn" (click)="addSportsman()">
+        <mat-icon>person_add</mat-icon>
+      </button>
+    </div>
+    <div class="col-md-11">
+      <input type="text" class="form-control" [(ngModel)]="searchStr" placeholder="Пошук по прізвищу">
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-md-3">
+      <mat-form-field>
+        <mat-select [(ngModel)]="coachId" placeholder="Тренери">
+          <mat-option *ngFor="let coach of coaches" [value]="coach.coachId">
+            {{coach.lastName}} {{coach.firstName}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-md-2">
+      <button class="btn btn-success" (click)="getSportsmenByCoachId(coachId)">
+        Пошук
+      </button>
+    </div>
+    <div class="col-md-3">
+      <mat-form-field>
+        <mat-select [(ngModel)]="sportKindId" placeholder="Види спорту">
+          <mat-option *ngFor="let sportKind of sportKinds" [value]="sportKind.id">
+            {{sportKind.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-md-2">
+      <button class="btn btn-success" (click)="getSportsmenBySportKindId(sportKindId)">
+        Пошук
+      </button>
+    </div>
+    <div class="col-md-2">
+      <button class="btn btn-success" (click)="ngOnInit()">
+        Усі
+      </button>
+    </div>
+  </div>
+  <br>
+</div>
 <table class="table table-striped">
   <thead>
   <tr>
@@ -20,7 +63,7 @@
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let sportsman of sportsmen">
+  <tr *ngFor="let sportsman of sportsmen | search:searchStr">
     <ng-template [ngTemplateOutlet]="loadTemplate(sportsman)"
                  [ngTemplateOutletContext]="{ $implicit: sportsman}">
     </ng-template>

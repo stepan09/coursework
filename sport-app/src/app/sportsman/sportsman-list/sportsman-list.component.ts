@@ -27,13 +27,17 @@ export class SportsmanListComponent implements OnInit {
   searchStr = '';
   isNewRecord: boolean;
   statusMessage: string;
+  coachId: number;
+  sportKindId: number;
 
   constructor(private sportsmanService: SportsmanService,
               private sportKindService: SportKindService,
-              private sportClubService: SportClubService) {
+              private sportClubService: SportClubService,
+              private coachService: CoachService) {
     this.sportsmen = new Array<Sportsman>();
     this.sportKinds = new Array<SportKind>();
     this.sportClubs = new Array<SportClub>();
+    this.coaches = new Array<Coach>();
   }
 
   ngOnInit() {
@@ -50,7 +54,23 @@ export class SportsmanListComponent implements OnInit {
     });
 
     this.sportClubService.getSportClubs().subscribe((data: SportClub[]) => {
-      this.sportClubs = data
+      this.sportClubs = data;
+    });
+
+    this.coachService.getCoaches().subscribe((data: Coach[]) => {
+      this.coaches = data;
+    });
+  }
+
+  getSportsmenByCoachId(coachId: number) {
+    this.sportsmanService.getSportsmenByCoachId(coachId).subscribe((data: Sportsman[]) => {
+      this.sportsmen = data;
+    });
+  }
+
+  getSportsmenBySportKindId(sportKindId: number) {
+    this.sportsmanService.getSportsmenBySportKindId(sportKindId).subscribe((data: Sportsman[]) => {
+      this.sportsmen = data;
     });
   }
 

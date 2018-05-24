@@ -13,6 +13,10 @@ export class CompetitionService {
     return this.http.get(this.url);
   }
 
+  getCompetitionsByDate(firstDate: Date, secondDate: Date) {
+    return this.http.get(this.url + '/' + firstDate + '/' + secondDate);
+  }
+
   createCompetition(competition: Competition) {
     return this.http.post(this.url, competition);
   }

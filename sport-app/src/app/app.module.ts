@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
 import {CoachModule} from "./coach/coach.module";
-import {FormControl, FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {FormsModule} from "@angular/forms";
 import {SportsmanModule} from "./sportsman/sportsman.module";
 import {StadiumModule} from "./stadium/stadium.module";
 import {HttpClientModule} from "@angular/common/http";
@@ -21,7 +21,7 @@ import {SportKindModule} from "./sport-kind/sport-kind.module";
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,7 +38,7 @@ import {SportKindModule} from "./sport-kind/sport-kind.module";
     HttpClientModule,
     FormsModule,
     BrowserAnimationsModule,
-    MaterialModule
+    MaterialModule,
   ],
   providers: [
     SportsmanModule,
