@@ -1,0 +1,40 @@
+<div class="form-group">
+  <label>Назва</label>
+  <input matInput class="form-control" type="text" [(ngModel)]="data.data2.name">
+</div>
+<div class="form-group">
+  <label>Старт</label>
+  <input type="date" [(ngModel)]="data.data2.startDate">
+</div>
+<div class="form-group">
+  <label>Фініш</label>
+  <input type="date" [(ngModel)]="data.data2.finishDate">
+</div>
+<div class="form-group">
+  <label>Організатор</label>
+  <select class="form-control" [(ngModel)]="data.data2.organizer">
+    <option *ngFor="let organizer of data.data1.organizers" [value]="organizer">
+      {{organizer.lastName}} {{organizer.firstName}}
+    </option>
+  </select>
+</div>
+<div class="form-group">
+  <label>Вид спорту</label>
+  <select [(ngModel)]="data.data2.sportKind">
+    <option *ngFor="let sportKind of data.data1.sportKinds" [value]="sportKind">
+      {{sportKind.name}}
+    </option>
+  </select>
+</div>
+<div class="form-group">
+  <label>Спортсмени</label>
+  <mat-select [(ngModel)]="data.data2.sportsmen" multiple>
+    <mat-option *ngFor="let sportsman of data.data1.sportsmen" [value]="sportsman">
+      {{sportsman.lastName}} {{sportsman.firstName}}
+    </mat-option>
+  </mat-select>
+</div>
+
+<button [mat-dialog-close]="data">Зберегти</button>
+
+

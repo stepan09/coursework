@@ -4,6 +4,7 @@
 
 package oli.coursework.sport.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -32,9 +33,10 @@ public class Organizer implements Serializable {
     @Column(name = "middle_name")
     private String middleName;
 
-    /*@OneToMany(mappedBy = "organizer", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @JsonIgnore
+    @OneToMany(mappedBy = "organizer", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Competition> competitions;
-*/
+
     public Organizer() {
     }
 
@@ -42,9 +44,7 @@ public class Organizer implements Serializable {
         this.lastName = lastName;
         this.firstName = firstName;
         this.middleName = middleName;
-/*
         this.competitions = competitions;
-*/
     }
 
     public Long getOrganizerId() {
@@ -79,11 +79,11 @@ public class Organizer implements Serializable {
         this.middleName = middleName;
     }
 
-    /*public List<Competition> getCompetitions() {
+    public List<Competition> getCompetitions() {
         return competitions;
     }
 
     public void setCompetitions(List<Competition> competitions) {
         this.competitions = competitions;
-    }*/
+    }
 }

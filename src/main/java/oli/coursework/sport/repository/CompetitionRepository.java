@@ -18,4 +18,12 @@ public interface CompetitionRepository extends JpaRepository<Competition, Long> 
 
     @Query("select c from Competition c where c.startDate between :firstDate and :secondDate")
     List<Competition> getAll(@Param("firstDate") Date firstDate, @Param("secondDate") Date secondDate);
+
+    List<Competition>findCompetitionsBySportKind_IdAndGyms_GymId(Long sportKindId, Long gymId);
+
+    List<Competition>findCompetitionsBySportKind_IdAndStadiums_StadiumId(Long sportKindId, Long stadiumId);
+
+    List<Competition> findByOrganizer_OrganizerId(Long organizerId);
+
+    List<Competition> findBySportKind_Id(Long sportKindId);
 }

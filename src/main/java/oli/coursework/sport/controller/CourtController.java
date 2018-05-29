@@ -35,14 +35,14 @@ public class CourtController {
     @GetMapping("/courts/{id}")
     public Court getCourtById(@PathVariable(value = "id") Long courtId) {
         return courtRepository.findById(courtId)
-                .orElseThrow(() -> new ResourceNotFoundException("Gym", "id", courtId));
+                .orElseThrow(() -> new ResourceNotFoundException("Court", "id", courtId));
     }
 
     @PutMapping("/courts/{id}")
     public Court updateCourt(@PathVariable(value = "id") Long courtId,
                               @Valid @RequestBody Court courtDetails) {
         Court court = courtRepository.findById(courtId)
-                .orElseThrow(() -> new ResourceNotFoundException("Gym", "id", courtId));
+                .orElseThrow(() -> new ResourceNotFoundException("Court", "id", courtId));
 
         court.setName(courtDetails.getName());
         court.setAddress(courtDetails.getAddress());
@@ -57,7 +57,7 @@ public class CourtController {
     @DeleteMapping("/courts/{id}")
     public ResponseEntity<?> deleteCourt(@PathVariable(value = "id") Long courtId) {
         Court court = courtRepository.findById(courtId)
-                .orElseThrow(() -> new ResourceNotFoundException("Gym", "id", courtId));
+                .orElseThrow(() -> new ResourceNotFoundException("Court", "id", courtId));
 
         courtRepository.delete(court);
 

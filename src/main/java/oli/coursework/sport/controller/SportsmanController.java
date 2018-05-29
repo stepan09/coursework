@@ -23,13 +23,23 @@ public class SportsmanController {
     private SportsmanRepository sportsmanRepository;
 
     @GetMapping("/sportsmen-by-coach/{id}")
-    public List<Sportsman> getSportsmenByCoachId(@PathVariable(value = "id") Long id) {
-        return sportsmanRepository.findByCoaches_CoachId(id);
+    public List<Sportsman> getSportsmenByCoachId(@PathVariable(value = "id") Long coachId) {
+        return sportsmanRepository.findByCoaches_CoachId(coachId);
+    }
+
+    @GetMapping("/sportsmen-by-sport-club/{id}")
+    public List<Sportsman> getSportsmenBySportClubId(@PathVariable(value = "id") Long sportClubId) {
+        return sportsmanRepository.findBySportClub_SportClubId(sportClubId);
     }
 
     @GetMapping("/sportsmen-by-sport-kind/{id}")
     public List<Sportsman> getSportsmenBySportKindId(@PathVariable(value = "id") Long sportKindId) {
         return sportsmanRepository.findBySportKinds_Id(sportKindId);
+    }
+
+    @GetMapping("/sportsmen-order")
+    public List<Sportsman> getSportsmenOrderAsc() {
+        return sportsmanRepository.findByOrderByBirthDateAsc();
     }
 
     @GetMapping("/sportsmen/{id}")

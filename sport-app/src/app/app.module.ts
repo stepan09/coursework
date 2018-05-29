@@ -17,6 +17,10 @@ import {CompetitionModule} from "./competition/competition.module";
 import {CourtModule} from "./court/court.module";
 import {GymModule} from "./gym/gym.module";
 import {SportKindModule} from "./sport-kind/sport-kind.module";
+import {
+  CompetitionListComponent,
+  EditCompetitionDialog
+} from "./competition/competition-list/competition-list.component";
 
 
 @NgModule({
@@ -51,6 +55,6 @@ import {SportKindModule} from "./sport-kind/sport-kind.module";
     GymModule,
     SportKindModule
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

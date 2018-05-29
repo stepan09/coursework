@@ -16,4 +16,8 @@ public interface SportsmanRepository extends JpaRepository<Sportsman, Long> {
     List<Sportsman> findByCoaches_CoachId(Long coachId);
 
     List<Sportsman> findBySportKinds_Id(Long sportKindId);
+
+    List<Sportsman> findBySportClub_SportClubId(Long sportClubId);
+
+    List<Sportsman> findByOrderByBirthDateAsc();
 }

@@ -4,6 +4,8 @@
 
 package oli.coursework.sport.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Cascade;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -37,6 +39,7 @@ public class Stadium implements Serializable {
     @Column(name = "treadmill")
     private boolean treadmill;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "stadiums")
     private List<Competition> competitions;
 

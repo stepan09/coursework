@@ -24,6 +24,26 @@ public class CompetitionController {
     @Autowired
     private CompetitionRepository competitionRepository;
 
+    @GetMapping("/competitions-by-organizer/{id}")
+    public List<Competition> getCompetitionsByOrganizerId(@PathVariable(value = "id") Long organizerId){
+        return competitionRepository.findByOrganizer_OrganizerId(organizerId);
+    }
+
+    @GetMapping("/competitions-by-sport-kind/{id}")
+    public List<Competition> getCompetitionsBySportKindId(@PathVariable(value = "id") Long sportKindId){
+        return competitionRepository.findBySportKind_Id(sportKindId);
+    }
+
+    @GetMapping("/competitions-by-sport-kind-gym/{sportKindId}/{gymId}")
+    public List<Competition> getCompetitionsBySportKindIdAndGymId(@PathVariable(value = "sportKindId") Long sportKindId, @PathVariable(value = "gymId") Long gymId){
+        return competitionRepository.findCompetitionsBySportKind_IdAndGyms_GymId(sportKindId,gymId);
+    }
+
+    @GetMapping("/competitions-by-sport-kind-stadium/{sportKindId}/{stadiumId}")
+    public List<Competition> getCompetitionsBySportKindIdAndStadiumId(@PathVariable(value = "sportKindId") Long sportKindId, @PathVariable(value = "stadiumId") Long stadiumId){
+        return competitionRepository.findCompetitionsBySportKind_IdAndStadiums_StadiumId(sportKindId, stadiumId);
+    }
+
     @GetMapping("/competitions")
     public List<Competition> getAllCompetitions(){
         return competitionRepository.findAll();
@@ -52,6 +72,9 @@ public class CompetitionController {
         competition.setOrganizer(competitionDetails.getOrganizer());
         competition.setSportKind(competitionDetails.getSportKind());
         competition.setSportsmen(competitionDetails.getSportsmen());
+        competition.setStadiums(competitionDetails.getStadiums());
+        competition.setCourts(competitionDetails.getCourts());
+        competition.setGyms(competitionDetails.getGyms());
 
         Competition updateCompetition = competitionRepository.save(competition);
 

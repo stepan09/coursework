@@ -1,4 +1,4 @@
-import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {Component, Inject, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {CompetitionService} from "../competition.service";
 import {Competition} from "../competition";
 import {OrganizerService} from "../../organizer/organizer.service";
@@ -7,6 +7,7 @@ import {SportKind} from "../../sport-kind/sportKind";
 import {SportKindService} from "../../sport-kind/sport-kind.service";
 import {Sportsman} from "../../sportsman/sportsman";
 import {SportsmanService} from "../../sportsman/sportsman.service";
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material";
 
 @Component({
   selector: 'app-competition-list',
@@ -29,11 +30,13 @@ export class CompetitionListComponent implements OnInit {
   searchStr = '';
   firstDate: Date;
   secondDate: Date;
+  name: string;
 
   constructor(private service: CompetitionService,
               private serv: OrganizerService,
               private servi: SportKindService,
-              private sportsmanService: SportsmanService) {
+              private sportsmanService: SportsmanService,
+              public dialog: MatDialog) {
     this.competitions = new Array<Competition>();
     this.organizers = new Array<Organizer>();
     this.sportKinds = new Array<SportKind>();
@@ -42,6 +45,37 @@ export class CompetitionListComponent implements OnInit {
 
   ngOnInit() {
     this.loadCompetitions();
+  }
+
+  openDialog(competition: Competition): void {
+    let dialogRef = this.dialog.open(EditCompetitionDialog, {
+      width: '600px',
+      data: {
+        data2: {
+          competitionId: competition.competitionId,
+          name: competition.name,
+          startDate: competition.startDate,
+          finishDate: competition.finishDate,
+          organizer: competition.organizer,
+          sportKind: competition.sportKind,
+          sportsmen: competition.sportsmen,
+        },
+        data1: {
+          organizers: this.organizers,
+          sportKinds: this.sportKinds,
+          sportsmen: this.sportsmen
+        }
+      },
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result != null) {
+        this.editedCompetition = result.data2;
+        console.log(this.editedCompetition);
+        this.saveCompetition();
+      }
+    })
   }
 
   private loadCompetitions() {
@@ -117,4 +151,23 @@ export class CompetitionListComponent implements OnInit {
         this.loadCompetitions();
     });
   }
+}
+
+@Component({
+  selector: 'edit-competition-dialog',
+  templateUrl: 'edit-competition-dialog.html'
+})
+export class EditCompetitionDialog {
+
+  competitionListComponent: CompetitionListComponent;
+
+  constructor(
+    public dialogRef: MatDialogRef<EditCompetitionDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: any) {  }
+
+
+    onNoClick(): void {
+    this.dialogRef.close();
+    }
+
 }

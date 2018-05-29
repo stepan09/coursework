@@ -27,6 +27,11 @@ public class OrganizerController {
         return organizerRepository.findAll();
     }
 
+    @GetMapping("/organizers-by-competition/{competitionId}")
+    public List<Organizer> getOrganizersByCompetition(@PathVariable(value = "competitionId") Long competitionId) {
+        return organizerRepository.findByCompetitions_CompetitionId(competitionId);
+    }
+
     @PostMapping("/organizers")
     public Organizer createOrganizer(@Valid @RequestBody Organizer organizer) {
         return organizerRepository.save(organizer);

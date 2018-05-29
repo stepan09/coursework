@@ -27,6 +27,25 @@ public class StadiumController {
         return stadiumRepository.findAll();
     }
 
+    @GetMapping("/stadiums-treadmill")
+    public List<Stadium> getAllStadiumsWithTreadmill(){
+        return stadiumRepository.findAllByTreadmillTrue();
+    }
+    @GetMapping("/stadiums-greater/{capacity}")
+    public List<Stadium> getAllStadiumsGreaterThan(@PathVariable(value = "capacity") Integer capacity){
+        return stadiumRepository.findAllByCapacityGreaterThan(capacity);
+    }
+
+    @GetMapping("/stadiums-order-desc")
+    public List<Stadium> getAllStadiumsOrderDescCapacity(){
+        return stadiumRepository.findByOrderByCapacityDesc();
+    }
+
+    @GetMapping("/stadiums-order-asc")
+    public List<Stadium> getAllStadiumsOrderAscCapacity(){
+        return stadiumRepository.findByOrderByCapacityAsc();
+    }
+
     @PostMapping("/stadiums")
     public Stadium createStadium(@Valid @RequestBody Stadium stadium){
         return stadiumRepository.save(stadium);

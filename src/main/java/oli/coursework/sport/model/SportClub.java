@@ -4,6 +4,7 @@
 
 package oli.coursework.sport.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -30,8 +31,9 @@ public class SportClub implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date foundationDate;
 
-    /*@OneToMany(mappedBy = "sportClub", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    private List<Sportsman> sportsmen;*/
+    @JsonIgnore
+    @OneToMany(mappedBy = "sportClub", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<Sportsman> sportsmen;
 
     public SportClub() {
     }
@@ -39,7 +41,7 @@ public class SportClub implements Serializable {
     public SportClub(@NotBlank String name, Date foundationDate, List<Sportsman> sportsmen) {
         this.name = name;
         this.foundationDate = foundationDate;
-        /*this.sportsmen = sportsmen;*/
+        this.sportsmen = sportsmen;
     }
 
     public Long getSportClubId() {
@@ -66,11 +68,11 @@ public class SportClub implements Serializable {
         this.foundationDate = foundationDate;
     }
 
-    /*public List<Sportsman> getSportsmen() {
+    public List<Sportsman> getSportsmen() {
         return sportsmen;
     }
 
     public void setSportsmen(List<Sportsman> sportsmen) {
         this.sportsmen = sportsmen;
-    }*/
+    }
 }

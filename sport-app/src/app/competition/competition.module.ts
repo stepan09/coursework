@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { CompetitionRoutingModule } from './competition-routing.module';
-import { CompetitionListComponent } from './competition-list/competition-list.component';
+import {CompetitionListComponent, EditCompetitionDialog} from './competition-list/competition-list.component';
 import {MaterialModule} from "../material.module";
 import {FormsModule} from "@angular/forms";
 import {SearchPipeModule} from "../search.pipe.module";
@@ -15,6 +15,10 @@ import {SearchPipeModule} from "../search.pipe.module";
     MaterialModule,
     SearchPipeModule
   ],
-  declarations: [CompetitionListComponent]
+  declarations: [
+    CompetitionListComponent,
+    EditCompetitionDialog
+  ],
+  entryComponents: [EditCompetitionDialog, CompetitionListComponent]
 })
 export class CompetitionModule { }
